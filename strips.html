@@ -711,11 +711,182 @@
             border-top: 1px solid var(--glass-border);
         }
 
+        /* Promotion Dropdown */
+        .promo-container {
+            margin-top: 2rem;
+            text-align: left;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .promo-tab {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .promo-tab:hover {
+            background: rgba(0, 242, 254, 0.12);
+            border-color: var(--brand-cyan);
+            transform: translateY(-2px);
+        }
+
+        .promo-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--brand-cyan);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.05rem;
+            text-transform: uppercase;
+        }
+
+        .promo-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .promo-tab.active .promo-icon {
+            transform: rotate(180deg);
+        }
+
+        .promo-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 0 0 16px 16px;
+            margin-top: -8px;
+            /* Slight overlap for seamless look */
+            opacity: 0;
+        }
+
+        .promo-tab.active+.promo-content {
+            max-height: 500px;
+            margin-top: 0.5rem;
+            padding: 1.5rem;
+            opacity: 1;
+            border: 1px solid var(--glass-border);
+            border-top: none;
+            background: var(--glass);
+        }
+
+        .promo-badge {
+            display: inline-block;
+            background: var(--brand-cyan);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .promo-steps {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .promo-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .promo-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 242, 254, 0.15);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--brand-cyan);
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-dim);
+        }
+
+        .step-text strong {
+            color: var(--text-main);
+        }
+
+        .step-text a {
+            color: var(--brand-cyan);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .step-text a:hover {
+            border-bottom-color: var(--brand-cyan);
+        }
+
         @media (max-width: 800px) {
             .benefit-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
+        }
+
+        /* Promotions Highlight */
+        .promo-highlight {
+            background: rgba(0, 242, 254, 0.15) !important;
+            border: 1px solid rgba(0, 242, 254, 0.4) !important;
+            color: var(--brand-cyan) !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 50px !important;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
+            }
+        }
+
+        .promo-modal-content {
+            background: var(--bg-deep);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            border-radius: 32px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -728,6 +899,7 @@
             </div>
         </a>
         <div class="nav-links">
+            <a href="javascript:void(0)" class="usage-link promo-highlight" id="nav-promo-link">PROMOTIONS</a>
             <a href="#usage-section" class="usage-link">USAGE</a>
             <a href="index.html" class="back-btn">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -741,6 +913,7 @@
     </nav>
 
     <div class="container reveal">
+
         <section class="breathing-hook">
             <h1>The Power of Breathing</h1>
             <p>
@@ -797,7 +970,6 @@
                     <span class="price" id="display-price">₹279</span>
                     <span class="mrp" id="display-mrp">₹499</span>
                 </div>
-
                 <a href="https://www.meesho.com/alhazen-labs-breathing-nasal-strips-pack-of-10/p/cfdwzs" target="_blank"
                     class="buy-now" id="meesho-link">
                     Buy on Meesho
@@ -899,7 +1071,6 @@
             </svg>
         </a>
     </div>
-    </div>
 
     <footer class="footer">
         <p>&copy; 2026 ALHAZEN LABS. ALL RIGHTS RESERVED.</p>
@@ -929,6 +1100,49 @@
             </svg>
         </button>
         <img src="assets/usage.png" alt="Usage Instructions" class="modal-content-img" id="modal-img">
+    </div>
+
+    <!-- Promotions Modal -->
+    <div class="image-modal" id="promo-modal">
+        <div class="promo-modal-content">
+            <button class="close-image-modal" id="close-promo-modal" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" style="width: 24px; height: 24px;">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h3
+                style="color: var(--brand-cyan); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1rem;">
+                Early Adopter Offer</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-main); font-weight: 600;">Complete 100%
+                Refund</p>
+
+            <ul class="promo-steps">
+                <li class="promo-step">
+                    <div class="step-num">1</div>
+                    <div class="step-text">Use the product for <strong>7 days</strong>.</div>
+                </li>
+                <li class="promo-step">
+                    <div class="step-num">2</div>
+                    <div class="step-text">Write a review on the purchasing website (Meesho/Amazon).</div>
+                </li>
+                <li class="promo-step">
+                    <div class="step-num">3</div>
+                    <div class="step-text">Follow us on Instagram <a href="https://instagram.com/alhazenlabs"
+                            target="_blank">@alhazenlabs</a>.</div>
+                </li>
+                <li class="promo-step">
+                    <div class="step-num">4</div>
+                    <div class="step-text">Send screenshot of review and cost amount from your GPay number on <a
+                            href="https://wa.me/916363791467" target="_blank">WhatsApp</a>.</div>
+                </li>
+            </ul>
+
+            <p style="font-size: 0.75rem; color: var(--text-dim); margin-top: 2rem; font-style: italic;">
+                *Applicable for the first 7 users only.
+            </p>
+        </div>
     </div>
 
     <script>
@@ -1049,10 +1263,32 @@
             if (e.target === usageModal) closeModal();
         });
 
+        // Promotions Modal Logic
+        const promoModal = document.getElementById('promo-modal');
+        const navPromoLink = document.getElementById('nav-promo-link');
+        const closePromoBtn = document.getElementById('close-promo-modal');
+
+        function openPromo() {
+            promoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePromo() {
+            promoModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        navPromoLink.addEventListener('click', openPromo);
+        closePromoBtn.addEventListener('click', closePromo);
+        promoModal.addEventListener('click', (e) => {
+            if (e.target === promoModal) closePromo();
+        });
+
         // Close on Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && usageModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
                 closeModal();
+                closePromo();
             }
         });
     </script>
